@@ -19,14 +19,23 @@ kotlin {
         jvmToolchain(11)
         withJava()
     }
+    val exposedVersion: String by project
+    val slf4jVersion: String by project
     sourceSets {
         val jvmMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
-                // Mongo / Realm
-                implementation("org.mongodb:mongodb-driver-sync:4.7.1")
-                implementation("io.realm.kotlin:library-sync:1.5.0")
-                implementation("org.slf4j:slf4j-log4j12:1.7.25")
+                // Exposed
+                implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+
+                // SQLite
+                implementation("org.xerial:sqlite-jdbc:3.30.1")
+
+                // slf4j
+                implementation ("org.slf4j:slf4j-api:$slf4jVersion")
+                implementation ("org.slf4j:slf4j-simple:$slf4jVersion")
 
                 // Coroutines
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
@@ -46,7 +55,7 @@ compose.desktop {
             description = "Desktop app for quick notes"
             copyright = "© 2023 Marti Garcia. All rights reserved."
             vendor = "garsemar"
-            licenseFile.set(project.file("LICENSE.txt"))
+            licenseFile.set(project.file("LICENSE"))
         }
     }
 }
