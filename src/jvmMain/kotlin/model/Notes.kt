@@ -7,7 +7,7 @@ object Notes: IntIdTable() {
     fun Query.mapNotes(): List<Note> =
         this.map {
             Note(
-                it[id],
+                it[id].toString().toInt(),
                 it[title],
                 it[content],
                 it[done],
@@ -15,7 +15,7 @@ object Notes: IntIdTable() {
             )
         }
     val title = varchar("title", 50)
-    val content = varchar("content", 200)
+    val content = varchar("content", 1000)
     val done = bool("done").default(false)
     val removed = bool("removed").default(false)
 }
